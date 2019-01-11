@@ -1,4 +1,5 @@
 import bpy
+from . events import property_changed
 
 class FunctionNodeTree(bpy.types.NodeTree):
     bl_idname = "FunctionNodeTree"
@@ -11,6 +12,9 @@ class Node:
 
     def create(self):
         pass
+
+    def property_changed(self, context=None):
+        property_changed()
 
 class Socket:
     color = (0, 0, 0, 0)
@@ -29,6 +33,9 @@ class Socket:
 
     def build_final_graph(self):
         pass
+
+    def property_changed(self, context=None):
+        property_changed()
 
 class FunctionNode(Node):
     def build_graph(self):

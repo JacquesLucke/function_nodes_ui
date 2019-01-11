@@ -1,4 +1,5 @@
 import bpy
+from bpy.props import *
 import functions
 from pprint import pprint
 from dataclasses import dataclass
@@ -13,8 +14,10 @@ class CompileFunctionOperator(bpy.types.Operator):
     bl_idname = "fn.compile_function"
     bl_label = "Compile Function"
 
+    tree_name = StringProperty()
+
     def execute(self, context):
-        tree = context.space_data.node_tree
+        tree = bpy.data.node_groups[self.tree_name]
         graph = generate_node_graph_json(tree)
         pprint(graph)
         functions.set_function_graph(graph)

@@ -7,7 +7,7 @@ class VectorSocket(Socket, bpy.types.NodeSocket):
     bl_idname = "fn_VectorSocket"
     color = (0.3, 0.3, 0.8, 1)
 
-    value: FloatVectorProperty(name="Value", size=3)
+    value: FloatVectorProperty(name="Value", size=3, update=Socket.property_changed)
 
     def draw_property(self, layout, text, node):
         layout.column(align=True).prop(self, "value", text=text)

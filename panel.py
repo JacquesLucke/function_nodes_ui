@@ -14,4 +14,5 @@ class FunctionNodesPanel(bpy.types.Panel):
 
     def draw(self, context):
         layout = self.layout
-        layout.operator("fn.compile_function")
+        props = layout.operator("fn.compile_function")
+        props.tree_name = context.space_data.node_tree.name

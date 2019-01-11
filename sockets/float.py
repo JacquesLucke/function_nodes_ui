@@ -7,7 +7,7 @@ class FloatSocket(Socket, bpy.types.NodeSocket):
     bl_idname = "fn_FloatSocket"
     color = (0, 0, 0, 1)
 
-    value: FloatProperty(name="Value", default=0.0)
+    value: FloatProperty(name="Value", default=0.0, update=Socket.property_changed)
 
     def draw_property(self, layout, text, node):
         layout.prop(self, "value", text=text)
