@@ -13,11 +13,4 @@ class CombineVectorNode(FunctionNode, bpy.types.Node):
         self.outputs.new("fn_VectorSocket", "Result")
 
     def build_graph(self):
-        irnode = ir.Node("combine_vec3", self.name)
-        graph = ir.Graph()
-        graph.add_node(irnode)
-        graph.add_link_hint(irnode.Input(0), self.inputs[0])
-        graph.add_link_hint(irnode.Input(1), self.inputs[1])
-        graph.add_link_hint(irnode.Input(2), self.inputs[2])
-        graph.add_link_hint(irnode.Output(0), self.outputs[0])
-        return graph
+        return self.graph_from_self("combine_vec3", self.name)

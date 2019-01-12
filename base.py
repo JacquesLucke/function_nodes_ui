@@ -1,4 +1,5 @@
 import bpy
+from . import ir
 from . events import property_changed
 
 class FunctionNodeTree(bpy.types.NodeTree):
@@ -40,3 +41,13 @@ class Socket:
 class FunctionNode(Node):
     def build_graph(self):
         pass
+
+    def graph_from_self(self, type_name, debug_name="", **settings):
+        graph = ir.Graph()
+        irnode = ir.Node(type_name, debug_name, **settings)
+        graph.add_node(irnode)
+        for i, socket in enumerate(self.inputs):
+            graph.add_link_hint(irnode.Input(i), socket)
+        for i, socket in enumerate(self.outputs):
+            graph.add_link_hint(irnode.Output(i), socket)
+        return graph

@@ -15,10 +15,4 @@ class SwitchNode(FunctionNode, bpy.types.Node):
         self.outputs.new("fn_FloatSocket", "Result")
 
     def build_graph(self):
-        irnode = ir.Node("switch_float", self.name, amount=3)
-        graph = ir.Graph()
-        graph.add_node(irnode)
-        for i in range(5):
-            graph.add_link_hint(irnode.Input(i), self.inputs[i])
-        graph.add_link_hint(irnode.Output(0), self.outputs[0])
-        return graph
+        return self.graph_from_self("switch_float", self.name, amount=3)

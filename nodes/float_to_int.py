@@ -11,9 +11,4 @@ class FloatToIntNode(FunctionNode, bpy.types.Node):
         self.outputs.new("fn_IntegerSocket", "Out")
 
     def build_graph(self):
-        irnode = ir.Node("float_to_int", self.name)
-        graph = ir.Graph()
-        graph.add_node(irnode)
-        graph.add_link_hint(irnode.Input(0), self.inputs[0])
-        graph.add_link_hint(irnode.Output(0), self.outputs[0])
-        return graph
+        return self.graph_from_self("float_to_int", self.name)
