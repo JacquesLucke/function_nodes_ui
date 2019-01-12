@@ -22,7 +22,7 @@ class CompileFunctionOperator(bpy.types.Operator):
     def execute(self, context):
         tree = bpy.data.node_groups[self.tree_name]
         graphs = [node.build_graph() for node in tree.nodes if isinstance(node, FunctionNode)]
-        graph = ir.PartialGraph.join(graphs)
+        graph = ir.Graph.join(graphs)
         ir.do_linking(graph, tree)
         blender_format = ir.to_blender_format(graph, tree)
         print(json.dumps(blender_format, indent=2))

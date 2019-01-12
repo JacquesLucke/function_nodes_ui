@@ -35,7 +35,7 @@ class Node:
             data["debug_name"] = self.debug_name
         return data
 
-class PartialGraph:
+class Graph:
     def __init__(self):
         self.nodes = []
         self.links = []
@@ -76,7 +76,7 @@ class PartialGraph:
 
     @classmethod
     def join(cls, graphs):
-        full_graph = PartialGraph()
+        full_graph = Graph()
         for graph in graphs:
             full_graph.add_graph(graph)
         return full_graph

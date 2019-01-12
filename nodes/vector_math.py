@@ -13,7 +13,7 @@ class VectorMathNode(FunctionNode, bpy.types.Node):
 
     def build_graph(self):
         irnode = ir.Node("add_vec3", amount=2)
-        graph = ir.PartialGraph()
+        graph = ir.Graph()
         graph.add_node(irnode)
         graph.add_link_hint(irnode.Input(0), self.inputs[0])
         graph.add_link_hint(irnode.Input(1), self.inputs[1])

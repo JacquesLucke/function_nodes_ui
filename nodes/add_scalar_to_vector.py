@@ -14,7 +14,8 @@ class AddScalarToVectorNode(FunctionNode, bpy.types.Node):
     def build_graph(self):
         combine = ir.Node("combine_vec3", "Combine")
         add = ir.Node("add_vec3", "Add Vectors", amount=2)
-        graph = ir.PartialGraph()
+
+        graph = ir.Graph()
 
         graph.add_node(combine)
         graph.add_node(add)

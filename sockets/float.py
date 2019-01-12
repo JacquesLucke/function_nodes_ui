@@ -14,14 +14,14 @@ class FloatSocket(Socket, bpy.types.NodeSocket):
 
     def build_input_graph(self):
         irnode = ir.Node("float_input", number=self.value)
-        graph = ir.PartialGraph()
+        graph = ir.Graph()
         graph.add_node(irnode)
         graph.add_link_hint(irnode.Output(0), (self, "INPUT"))
         return graph
 
     def build_pass_through_graph(self):
         irnode = ir.Node("pass_through_float")
-        graph = ir.PartialGraph()
+        graph = ir.Graph()
         graph.add_node(irnode)
         graph.add_link_hint(irnode.Input(0), (self, "PASS_IN"))
         graph.add_link_hint(irnode.Output(0), (self, "PASS_OUT"))
