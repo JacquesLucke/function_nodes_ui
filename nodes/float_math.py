@@ -1,6 +1,6 @@
 import bpy
 from .. base import FunctionNode
-from .. ir import IRNode
+from .. import ir
 
 class FloatMathNode(FunctionNode, bpy.types.Node):
     bl_idname = "fn_FloatMathNode"
@@ -12,8 +12,10 @@ class FloatMathNode(FunctionNode, bpy.types.Node):
         self.outputs.new("fn_FloatSocket", "Result")
 
     def build_graph(self):
-        irnode = IRNode("add_floats", amount=2)
-        irnode.map_input(0, self.inputs[0])
-        irnode.map_input(1, self.inputs[1])
-        irnode.map_output(0, self.outputs[0])
-        yield irnode
+        irnode = ir.Node("add_floats", amount=2)
+        graph = ir.PartialGraph()
+        graph.add_node(irnode)
+        graph.add_socket_note(irnode.Input(0), self.inputs[0])
+        graph.add_socket_note(irnode.Input(1), self.inputs[1])
+        graph.add_socket_note(irnode.Output(0), self.outputs[0])
+        return graph

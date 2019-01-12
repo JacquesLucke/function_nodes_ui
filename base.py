@@ -29,10 +29,10 @@ class Socket:
             layout.label(text=text)
 
     def build_input_graph(self):
-        pass
+        assert False
 
-    def build_final_graph(self):
-        pass
+    def build_pass_through_graph(self):
+        assert False
 
     def property_changed(self, context=None):
         property_changed()
