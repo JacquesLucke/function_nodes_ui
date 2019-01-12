@@ -7,4 +7,5 @@ class FunctionInputNode(Node, bpy.types.Node):
 
     def create(self):
         self.outputs.new("fn_VectorSocket", "Position")
-        self.outputs.new("fn_FloatSocket", "Control")
+        self.outputs.new("fn_FloatSocket", "Float Control")
+        self.outputs.new("fn_IntegerSocket", "Int Control")
