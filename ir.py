@@ -53,9 +53,13 @@ class PartialGraph:
         self.sockets_by_link_hint[link_hint].append(socket)
 
     def get_socket_with_link_hint(self, link_hint):
-        sockets = self.sockets_by_link_hint[link_hint]
-        assert len(sockets) == 1
+        sockets = self.get_sockets_with_link_hint(link_hint)
+        if len(sockets) != 1:
+            raise Exception(f"excepted there to be exactly one socket with hint {repr(link_hint)}, there are {len(sockets)}")
         return sockets[0]
+
+    def get_sockets_with_link_hint(self, link_hint):
+        return self.sockets_by_link_hint[link_hint]
 
     def get_link_hint_of_socket(self, socket):
         hints = self.link_hints_by_socket[socket]
@@ -90,18 +94,19 @@ def do_linking(graph, orig_tree):
 
     for orig_link in orig_tree.links:
         from_socket = graph.get_socket_with_link_hint(orig_link.from_socket)
-        to_socket = graph.get_socket_with_link_hint(orig_link.to_socket)
-        graph.add_link(from_socket, to_socket)
+        for to_socket in graph.get_sockets_with_link_hint(orig_link.to_socket):
+            graph.add_link(from_socket, to_socket)
 
     for orig_node in orig_tree.nodes:
-        for socket in orig_node.inputs:
-            if socket.is_linked:
+        for orig_socket in orig_node.inputs:
+            if orig_socket.is_linked:
                 continue
 
-            graph.add_graph(socket.build_input_graph())
-            graph.add_link(
-                graph.get_socket_with_link_hint((socket, "INPUT")),
-                graph.get_socket_with_link_hint(socket))
+            graph.add_graph(orig_socket.build_input_graph())
+
+            from_socket = graph.get_socket_with_link_hint((orig_socket, "INPUT"))
+            for to_socket in graph.get_sockets_with_link_hint(orig_socket):
+                graph.add_link(from_socket, to_socket)
 
 def to_blender_format(graph, orig_tree):
     index_by_node = {node : i for i, node in enumerate(graph.nodes)}
