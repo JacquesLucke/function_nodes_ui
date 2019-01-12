@@ -26,5 +26,5 @@ class CompileFunctionOperator(bpy.types.Operator):
         ir.do_linking(graph, tree)
         blender_format = ir.to_blender_format(graph, tree)
         print(json.dumps(blender_format, indent=2))
-        #functions.set_function_graph(graph)
+        functions.set_function_graph(blender_format)
         return {'FINISHED'}

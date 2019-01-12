@@ -16,13 +16,13 @@ class FloatSocket(Socket, bpy.types.NodeSocket):
         irnode = ir.Node("float_input", number=self.value)
         graph = ir.PartialGraph()
         graph.add_node(irnode)
-        graph.add_socket_note(irnode.Output(0), (self, "INPUT"))
+        graph.add_link_hint(irnode.Output(0), (self, "INPUT"))
         return graph
 
     def build_pass_through_graph(self):
         irnode = ir.Node("pass_through_float")
         graph = ir.PartialGraph()
         graph.add_node(irnode)
-        graph.add_socket_note(irnode.Input(0), (self, "PASS_IN"))
-        graph.add_socket_note(irnode.Output(0), (self, "PASS_OUT"))
+        graph.add_link_hint(irnode.Input(0), (self, "PASS_IN"))
+        graph.add_link_hint(irnode.Output(0), (self, "PASS_OUT"))
         return graph

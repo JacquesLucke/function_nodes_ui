@@ -16,8 +16,8 @@ class CombineVectorNode(FunctionNode, bpy.types.Node):
         irnode = ir.Node("combine_vec3", self.name)
         graph = ir.PartialGraph()
         graph.add_node(irnode)
-        graph.add_socket_note(irnode.Input(0), self.inputs[0])
-        graph.add_socket_note(irnode.Input(1), self.inputs[1])
-        graph.add_socket_note(irnode.Input(2), self.inputs[2])
-        graph.add_socket_note(irnode.Output(0), self.outputs[0])
+        graph.add_link_hint(irnode.Input(0), self.inputs[0])
+        graph.add_link_hint(irnode.Input(1), self.inputs[1])
+        graph.add_link_hint(irnode.Input(2), self.inputs[2])
+        graph.add_link_hint(irnode.Output(0), self.outputs[0])
         return graph
