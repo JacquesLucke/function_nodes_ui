@@ -13,14 +13,14 @@ class VectorSocket(Socket, bpy.types.NodeSocket):
         layout.column(align=True).prop(self, "value", text=text)
 
     def build_input_graph(self):
-        irnode = ir.Node("vec3_input", x=self.value[0], y=self.value[1], z=self.value[2])
+        irnode = ir.Node("vec3_input", f"Vector: {self.name}", x=self.value[0], y=self.value[1], z=self.value[2])
         graph = ir.Graph()
         graph.add_node(irnode)
         graph.add_link_hint(irnode.Output(0), (self, "INPUT"))
         return graph
 
     def build_pass_through_graph(self):
-        irnode = ir.Node("pass_through_vec3")
+        irnode = ir.Node("pass_through_vec3", "Vector Pass")
         graph = ir.Graph()
         graph.add_node(irnode)
         graph.add_link_hint(irnode.Input(0), (self, "PASS_IN"))

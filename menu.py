@@ -19,6 +19,8 @@ def draw_menu(self, context):
     insert_node(layout, "fn_AddScalarToVectorNode", "Add Scalar to Vector")
     insert_node(layout, "fn_SwitchNode", "Switch")
     insert_node(layout, "fn_FloatToIntNode", "Float to Int")
+    insert_node(layout, "fn_SinFloatNode", "Sin Float")
+    insert_node(layout, "fn_SinTimeNode", "Sin Time")
 
 def insert_node(layout, type, text, settings = {}, icon = "NONE"):
     operator = layout.operator("node.add_node", text = text, icon = icon)

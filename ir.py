@@ -108,6 +108,13 @@ def do_linking(graph, orig_tree):
             for to_socket in graph.get_sockets_with_link_hint(orig_socket):
                 graph.add_link(from_socket, to_socket)
 
+    time_input = Node("float_input", "Time", number=0)
+    graph.add_node(time_input)
+    graph._time_input_node = time_input
+    for socket in graph.get_sockets_with_link_hint("TIME"):
+        graph.add_link(time_input.Output(0), socket)
+
+
 def to_blender_format(graph, orig_tree):
     index_by_node = {node : i for i, node in enumerate(graph.nodes)}
     return {
@@ -139,6 +146,12 @@ def to_blender_format__inputs(graph, index_by_node, orig_tree):
             "is_output" : s.is_output,
             "index" : s.index
         }
+
+    yield {
+        "node" : index_by_node[graph._time_input_node],
+        "is_output" : True,
+        "index" : 0
+    }
 
 def to_blender_format__outputs(graph, index_by_node, orig_tree):
     output_node = find_node_of_type(orig_tree, "fn_FunctionOutputNode")

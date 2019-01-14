@@ -13,14 +13,14 @@ class IntegerSocket(Socket, bpy.types.NodeSocket):
         layout.prop(self, "value", text=text)
 
     def build_input_graph(self):
-        irnode = ir.Node("int_input", number=self.value)
+        irnode = ir.Node("int_input", f"Int: {self.name}", number=self.value)
         graph = ir.Graph()
         graph.add_node(irnode)
         graph.add_link_hint(irnode.Output(0), (self, "INPUT"))
         return graph
 
     def build_pass_through_graph(self):
-        irnode = ir.Node("pass_through_int")
+        irnode = ir.Node("pass_through_int", "Int Pass")
         graph = ir.Graph()
         graph.add_node(irnode)
         graph.add_link_hint(irnode.Input(0), (self, "PASS_IN"))
